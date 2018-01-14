@@ -6,6 +6,10 @@ app.controller('myCtrl', function ($scope, $filter, $http) {
  	$scope.totalHoras = "00:00";
  	$scope.mantenimiento = 0;
  	$scope.mantenimientoText = "No";
+ 	$scope.averia = 0;
+ 	$scope.averiaText = "No";
+ 	$scope.tipoDeTrabajo = "";
+ 	$scope.esCasa = false;
 
   var config = {
     apiKey: "AIzaSyBRHf3QTmXwrmNX3vnvjYRLroOpLYgUQPk",
@@ -19,29 +23,40 @@ app.controller('myCtrl', function ($scope, $filter, $http) {
     firebase.initializeApp(config);
     var database = firebase.database();
 
-    $scope.sebadal = "Revisión Nave I El Sebadal";
-    $scope.tiendasLP = "Revisión tienda confección Las Palmas, dos plantas de Almacén y dos de oficinas" +
+    $scope.sebadalMantenimiento = "Revisión Nave I El Sebadal";
+    $scope.sebadal = "El Sebadal";
+    $scope.tiendasLPMantenimiento = "Revisión tienda confección Las Palmas, dos plantas de Almacén y dos de oficinas" +
     				    "\n" + "Revisión tienda J.M. Durán dos plantas" +
     				    "\n" + "Revisión tienda Calzados y almacén";
-    $scope.arucas = "Revisión tienda confección Arucas y almacén" +
+    $scope.tiendasLP = "Tienda LP";				    
+    $scope.arucasMantenimiento = "Revisión tienda confección Arucas y almacén" +
     				"\n" + "Revisión tienda Calzados Arucas y almacén" +
     				"\n" + "Revisión garajes Arucas 2 plantas";
-    $scope.maspalomas = "Revisión tienda Maspalomas" +
+    $scope.arucas = "Arucas";				
+    $scope.maspalomasMantenimiento = "Revisión tienda Maspalomas" +
     					"\n" + "Revisión almacén Calzados Maspalomas" +
     					"\n" + "Revisión garajes y zonas comunes de Maspalomas";
-	$scope.SietePalmas = "Revisión tienda de 7 Palmas";								    
+    $scope.maspalomas = "Maspalomas";					
+	$scope.SietePalmasMantenimiento = "Revisión tienda de 7 Palmas";
+	$scope.SietePalmas = "Siete Palmas";								    
 
 function recuperarUltimoParte(){
 	var numParteTrabajo=database.ref("partes_de_trabajo").limitToLast(1);
 	database.ref("partes_de_trabajo").limitToLast(1).once('value').then(function(snapshot) {
   		// The Promise was "fulfilled" (it succeeded).
   		var ultimoParte = snapshot.val();
-		angular.forEach(ultimoParte, function(value, key) {
-			  $scope.numeroParteAnterior = key;
-		});
-  		$scope.$apply(function () {
-            $scope.numeroParteNuevo = ++$scope.numeroParteAnterior;
-        });
+  		if(ultimoParte != null){
+			angular.forEach(ultimoParte, function(value, key) {
+				  $scope.numeroParteAnterior = key;
+			});
+	  		$scope.$apply(function () {
+	            $scope.numeroParteNuevo = ++$scope.numeroParteAnterior;
+	        });
+  		}else{
+	  		$scope.$apply(function () {
+	            $scope.numeroParteNuevo = 1;
+	        });
+  		}
 	}, function(error) {
 	  // The Promise was rejected.
 	  console.error(error);
@@ -70,19 +85,48 @@ $("#lugar").bind( "change", function(event, ui) {
 	$('#textarea-1').textinput().val("");
 	switch(options) {
     case 1:
-        $('#textarea-1').textinput().val($scope.sebadal);
+    	$scope.esCasa = false;
+    	if($scope.mantenimiento == 1){
+			$('#textarea-1').textinput().val($scope.sebadalMantenimiento);
+    	}else{
+        	$('#textarea-1').textinput().val($scope.sebadal);
+    	}
         break;
     case 2:
-        $('#textarea-1').textinput().val($scope.tiendasLP);
+    	$scope.esCasa = false;
+    	if($scope.mantenimiento == 1){
+			$('#textarea-1').textinput().val($scope.tiendasLPMantenimiento);
+    	}else{
+        	$('#textarea-1').textinput().val($scope.tiendasLP);
+    	}
         break;
     case 3:
-        $('#textarea-1').textinput().val($scope.arucas);
+    	$scope.esCasa = false;
+    	if($scope.mantenimiento == 1){
+        	$('#textarea-1').textinput().val($scope.arucasMantenimiento);
+    	}else{
+			$('#textarea-1').textinput().val($scope.arucas);
+    	}
         break;
     case 4:
-        $('#textarea-1').textinput().val($scope.maspalomas);
+    	$scope.esCasa = false;
+    	if($scope.mantenimiento == 1){
+        	$('#textarea-1').textinput().val($scope.maspalomasMantenimiento);
+    	}else{
+			$('#textarea-1').textinput().val($scope.maspalomas);
+    	}
         break;
     case 5:
-    	$('#textarea-1').textinput().val($scope.SietePalmas);
+    	$scope.esCasa = false;
+    	if($scope.mantenimiento == 1){
+    		$('#textarea-1').textinput().val($scope.SietePalmasMantenimiento);
+    	}else{
+    		$('#textarea-1').textinput().val($scope.SietePalmas);
+    	}
+    	break; 
+    case 6:
+    	$scope.esCasa = true;
+		$('#textarea-1').textinput().val("");
     	break;    
 }
 });
@@ -91,7 +135,9 @@ $("#mantenimiento" ).bind( "change", function(event, ui) {
 	$scope.mantenimiento = parseInt(event.currentTarget.value);
 
 	if($scope.mantenimiento == 1){
+		$('#textarea-1').textinput().val("");
 		$scope.mantenimientoText = "Si";
+		$scope.averia = 0;
 		$('#lugar').selectmenu('enable');
   		$('#time-1').textinput('disable');
 		$('#time-2').textinput('disable');
@@ -99,7 +145,29 @@ $("#mantenimiento" ).bind( "change", function(event, ui) {
 	}
 	if($scope.mantenimiento == 0){
 		$scope.mantenimientoText = "No";
-		$('#lugar').selectmenu('disable');
+		//$('#lugar').selectmenu('disable');
+  		$('#time-1').textinput('enable');
+		$('#time-2').textinput('enable');
+	}
+});
+
+$("#averia" ).bind( "change", function(event, ui) {
+	$scope.averia = parseInt(event.currentTarget.value);
+
+	if($scope.averia == 1){
+		$('#textarea-1').textinput().val("");
+		$scope.averiaText = "Si";
+		$scope.mantenimiento = 0;
+		$('#mantenimiento').val('0');
+		$('#mantenimiento').slider('refresh');
+
+		$('#lugar').selectmenu('enable');
+  		$('#time-1').textinput('enable');
+		$('#time-2').textinput('enable');
+		$scope.totalHoras = "00:00";
+	}
+	if($scope.averia == 0){
+		$scope.averiaText = "No";
   		$('#time-1').textinput('enable');
 		$('#time-2').textinput('enable');
 	}
@@ -117,6 +185,7 @@ function validation(){
     $scope.cliente = $("#select-cliente option:selected").text();
     $scope.mailCliente = $('#correo-cliente').val();
     $scope.es_mantenimiento = $scope.mantenimientoText;
+    $scope.es_averia = $scope.averiaText;
     $scope.lugar = $("#lugar option:selected").text();
     $scope.textArea = $('#textarea-1').val();
 	$scope.horaEntrada = $('#time-1').val();
@@ -127,7 +196,7 @@ function validation(){
 	$scope.imgData = canvas.toDataURL();
 	$scope.horaEntrada = $('#time-1').val();
 
-	if($scope.mantenimiento == 0){
+	if($scope.mantenimiento == 0 || $scope.averia == 1){
 		if($scope.horaEntrada > $scope.horaSalida){
 			++$scope.errores;
 			$scope.errorHora = "La hora de entrada no puede ser mayor a la hora de salida";
@@ -145,27 +214,37 @@ function validation(){
 		++$scope.errores;
 		$scope.erroresText_1 = "El campo 'trabajo realizado' está vacio";
 	}
-	if($scope.firmante == ""){
-		++$scope.errores;
-		$scope.erroresText_4 = "Es necesario indicar quién firma";
+	if($scope.esCasa == false){
+		if($scope.firmante == ""){
+			++$scope.errores;
+			$scope.erroresText_4 = "Es necesario indicar quién firma";
+		}
 	}
 }
 
 $scope.enviar = function() {
-
-    validation();
-    if($scope.errores>=1){
-		$("#popupBasic").popup("open");
-    }else{
-
-    	var fecha = $filter('date')($scope.today, "dd-MM-yyyy");     
+	var canvas = $("#canvas").get(0);
+	$scope.imgData = canvas.toDataURL();
+	if ((signaturePad.isEmpty()) && ($scope.esCasa == false)) {
+		alert('La firma esta vacia');
+	}else{
+		$scope.fecha = $filter('date')($scope.today, "dd-MM-yyyy");     
 	    var refPartesTrabajo=database.ref("partes_de_trabajo");		
 
+	    if(($scope.averia == 1) && ($scope.mantenimiento == 0)){
+	    	$scope.tipoDeTrabajo = "Avería";
+	    }
+	    else if(($scope.mantenimiento) == 1 && ($scope.averia== 0)){
+			$scope.tipoDeTrabajo = "Mantenimiento";
+	    }else{
+	    	$scope.tipoDeTrabajo = "Obra";
+	    }
+
 		refPartesTrabajo.child($scope.numeroParteNuevo).set({
-			fecha: fecha,
+			fecha: $scope.fecha,
 			cliente: $scope.cliente,
 			mailCliente: $scope.mailCliente,
-			es_mantenimiento: $scope.es_mantenimiento,
+			tipoDeTrabajo: $scope.tipoDeTrabajo,
 			lugar: $scope.lugar,
 			trabajo_realizado: $scope.textArea,
 			horaEntrada: $scope.horaEntrada,
@@ -175,18 +254,19 @@ $scope.enviar = function() {
 			firmante: $scope.firmante
 		});
 		enviar_email();
-		alert("Enviado");
+		$scope.reset();
 		recuperarUltimoParte();
+		checkConnection();
 	}
 }
 
 function enviar_email(){
 	var data = {
 			numeroDeParte: $scope.numeroParteNuevo,
-			fecha: $scope.today,
+			fecha: $scope.fecha,
 			cliente: $scope.cliente,
 			mailCliente: $scope.mailCliente,
-			es_mantenimiento: $scope.es_mantenimiento,
+			tipoDeTrabajo: $scope.tipoDeTrabajo,
 			lugar: $scope.lugar,
 			trabajo_realizado: $scope.textArea,
 			horaEntrada: $scope.horaEntrada,
@@ -209,6 +289,7 @@ function enviar_email(){
 	       data: data  /*You data object/class to post*/
 	    }).then(function successCallback(response) {
 	    	console.log(response);
+			alert("Enviado");
 	    }, function errorCallback(response) {
 	       // called asynchronously if an error occurs
 	       // or server returns response with an error status.
@@ -217,9 +298,74 @@ function enviar_email(){
 
 } 
 
+$scope.popFirma = function(){
+    validation();
+    if($scope.errores>=1){
+		$("#popupBasic").popup("open");
+		window.scrollTo(0, 0);
+    }else{
+    	var w = screen.width;
+    	var h = screen.height;
+    	$("#firma").css('width', w);
+    	$("#firma").css('height', 900);
+		bloquear_campos();
+		$("#firma").popup("open");
+		window.scrollTo(0, 0);
+	}
+}
+
+function bloquear_campos(){
+	$('#select-cliente').selectmenu('disable');
+	$('#mantenimiento').slider('disable');
+	$('#averia').slider('disable');
+   	$('#textarea-1').textinput('disable');
+   	$('#lugar').selectmenu('disable');
+	$('#time-1').textinput('disable');
+	$('#time-2').textinput('disable');
+	$('#firmante').textinput('disable');
+}
+
+function desbloquear_campos(){
+	$('#select-cliente').selectmenu('enable');
+	$('#mantenimiento').slider('enable');
+	$('#averia').slider('enable');
+   	$('#textarea-1').textinput('enable');
+   	$('#lugar').selectmenu('enable');
+	$('#time-1').textinput('enable');
+	$('#time-2').textinput('enable');
+	$('#firmante').textinput('enable');
+}
 
 
+$scope.reset = function() {
+	desbloquear_campos();
+	$('#mantenimiento').val('0');
+	$('#mantenimiento').slider('refresh');
+	$('#averia').val('0');
+	$('#averia').slider('refresh');
+	$scope.totalHoras = "00:00";
+   	$('#textarea-1').val('');
+	$('#time-1').val('');
+	$('#time-2').val('');
+	$('#firmante').val('');
+	init_Sign_Canvas();
+}
 
+    function checkConnection() {
+        var networkState = navigator.connection.type;
+
+        var states = {};
+        states[Connection.UNKNOWN]  = 'Unknown connection';
+        states[Connection.ETHERNET] = 'Ethernet connection';
+        states[Connection.WIFI]     = 'WiFi connection';
+        states[Connection.CELL_2G]  = 'Cell 2G connection';
+        states[Connection.CELL_3G]  = 'Cell 3G connection';
+        states[Connection.CELL_4G]  = 'Cell 4G connection';
+        states[Connection.CELL]     = 'Cell generic connection';
+        states[Connection.NONE]     = 'No network connection';
+
+        alert('Connection type: ' + states[networkState]);
+    }
 
 recuperarUltimoParte();
 

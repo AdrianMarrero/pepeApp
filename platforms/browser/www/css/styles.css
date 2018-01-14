@@ -1,7 +1,6 @@
-/*#canvas{
-	width: 100%!important;
-	height:250px!important;
-}*/
+html, body {
+  overflow-x: auto;
+}
 #textarea-1{
 	height: 80px!important;
 }
@@ -35,10 +34,6 @@
 .height-80{
 	height: 80px;
 }
-#popupBasic{
-	padding: 20px;
-    width: 200px
-}
 .border-top{
 	border-top: 1px solid #ccc;
 }
@@ -52,4 +47,25 @@
     color: red;
     font-size: 10px;
     font-weight: bold;
+}
+.ui-popup-container{
+    height: 98%;
+    width: 100%!important;
+    position: absolute;
+    top:0;
+    left:0!important;
+    margin:0 auto;
+}
+#popupBasic{
+	padding: 20px;
+    width: 250px!important;
+    height: 200px;
+    position: absolute;
+    text-align: center;
+    overflow: auto;
+    margin: 0 auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }

@@ -16,7 +16,7 @@
 </head>
 <body ng-app="myApp" ng-controller="myCtrl">
 
-<div data-role="page" data-theme="a">
+<div data-role="page" data-theme="a" id="page-app">
 	<div data-role="header" data-theme="a" data-position="inline">
 		<div class="ui-grid-a height-65">
 			<div class="ui-block-a margin-top-10">
@@ -38,19 +38,29 @@
 			<option value="1" selected>Desnudos</option>
 		</select>
 		<input disabled="disabled" name="text-10" id="correo-cliente" value="desnudos@correo.com" type="text">
-		<p class="border-top padding-top"><label for="mantenimiento">Es mantenimiento:</label>
-		<select name="mantenimiento" id="mantenimiento" data-role="slider">
-		    <option value="0">No</option>
-		    <option value="1">Si</option>
-		</select></p>
+		<div class="ui-grid-a">
+			<div class="ui-block-a border-top padding-top"><label for="mantenimiento">Mantenimiento:</label>
+			<select name="mantenimiento" id="mantenimiento" data-role="slider">
+			    <option value="0">No</option>
+			    <option value="1">Si</option>
+			</select>
+			</div>
+			<div class="ui-block-b border-top padding-top"><label for="mantenimiento">Avería:</label>
+			<select name="averia" id="averia" data-role="slider">
+			    <option value="0">No</option>
+			    <option value="1">Si</option>
+			</select>
+			</div>
+		</div>
 		<p class="border-top padding-top"><label for="lugar">Lugar de trabajo</label></p>
-		<select name="lugar" id="lugar" disabled="disable">
+		<select name="lugar" id="lugar">
 			<option value="0" selected>No especificado</option>
 			<option value="1">Sebadal</option>
 			<option value="2">Tiendas LP</option>
 			<option value="3">Arucas</option>
 			<option value="4">Maspalomas</option>
 			<option value="5">Siete Palmas</option>
+			<option value="6">***</option>
 		</select>
 		<p class="border-top"><center><label for="textarea-1">TRABAJO REALIZADO</label></center></p>
 		<textarea name="textarea-1" id="textarea-1"></textarea>
@@ -72,23 +82,34 @@
 			<label for="text-basic">Quién firma</label>
 			<input type="text" name="firmante" id="firmante" value="">
 		</div>
-		<center class="padding-bottom">
-		<div data-role="collapsible">
-  			<h3>Firma</h3>
-			<div id="div_signcontract">
-				<canvas id="canvas">Canvas is not supported</canvas>
-				<div class="text-right">
-					<input id="btnClearSign" type="button" data-inline="true" data-mini="true" data-theme="b" value="Borrar firma" onclick="init_Sign_Canvas()" />
-				</div>
-			</div>
-		</div>
+		<center>
+			<button class="ui-btn ui-icon-check ui-btn-icon-left ui-shadow ui-corner-all" ng-click="popFirma()">Firmar</button>	
 		</center>
-		<center class="border-top padding-top"><button class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-check" ng-click="enviar()">Enviar</button></center>
+		<center class="padding-bottom">
+			<button class="ui-btn ui-icon-recycle ui-btn-icon-left ui-shadow ui-corner-all" ng-click="reset()">Reset</button>	
+		</center>
+
 	</form>		
 	</div>
 </div>
 
-<div data-role="popup" id="popupBasic" data-overlay-theme="b" data-theme="b" data-dismissible="false" style="max-width:400px;">
+<div data-role="popup" id="firma" data-dismissible="false">
+    <div data-role="header" data-theme="a">
+         <h1>Firma</h1>
+    </div>
+    <div role="main" class="ui-content">
+		<div id="div_signcontract">
+			<canvas id="canvas">Canvas is not supported</canvas>
+			<div class="text-right">
+				<input id="btnClearSign" type="button" data-inline="true" data-mini="true" data-theme="b" value="Borrar firma" onclick="init_Sign_Canvas()" />
+			</div>
+		</div>
+		<center class="border-top padding-top"><button class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-check" ng-click="enviar()">Enviar</button></center><!--ng-click="enviar()"-->
+		<center class="border-top padding-top"><a href="#" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-delete" data-rel="back">Cancel</a></center>
+    </div>
+</div>
+
+<div data-role="popup" id="popupBasic" data-overlay-theme="b" data-theme="b" data-dismissible="false">
     <div role="main" class="ui-content">
 	<p class="error">{{erroresText_1}}</p>
 	<p class="error">{{erroresText_2}}</p>
@@ -96,7 +117,6 @@
 	<p class="error">{{erroresText_4}}</p>
 	<p class="error">{{errorHora}}</p>
 	<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Cerrar</a>
-
     </div>
 </div>
 
@@ -110,10 +130,14 @@
 
 <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
 <script src="js/signature_pad.js"></script>
+<script src="js/signature_pad_custom.js"></script>
 <script src="js/angular.min.js"></script>
 <script src="js/app.js"></script>
 
-
+<script type="text/javascript">
+	var canvas = document.getElementById('canvas');
+	var signaturePad = new SignaturePad(canvas);
+</script>
 
 </body>
 
