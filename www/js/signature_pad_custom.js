@@ -31,7 +31,7 @@
 			leftMButtonDown = false;
 			
 			//Set Canvas width
-			var sizedWindowWidth = $(window).width();
+			var sizedWindowWidth = 350;
 			/*if(sizedWindowWidth > 700)
 				sizedWindowWidth = $(window).width() / 2;
 			else if(sizedWindowWidth > 400)
