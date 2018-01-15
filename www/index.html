@@ -136,7 +136,11 @@
 
 <script type="text/javascript">
 	var canvas = document.getElementById('canvas');
-	var signaturePad = new SignaturePad(canvas);
+	var signaturePad = new SignaturePad(canvas, {
+  		backgroundColor: 'rgb(255, 255, 255)',
+  		minWidth: 1,
+    	maxWidth: 1
+	});
 </script>
 
 </body>

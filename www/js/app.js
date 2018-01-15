@@ -361,8 +361,8 @@ $scope.checkConnection = function(){
     states[Connection.CELL_3G]  = 'Cell 3G connection';
     states[Connection.CELL_4G]  = 'Cell 4G connection';
     states[Connection.CELL]     = 'Cell generic connection';
-    states[Connection.NONE]     = 'No network connection';
-    if(states[Connection.NONE]){
+    states[Connection.NONE]     = 'NO';
+    if(states[networkState] === 'NO'){
     	alert("Na hay conexión");
     }else{
     	$scope.enviar();

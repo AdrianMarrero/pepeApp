@@ -59,9 +59,9 @@
 				// canvasContext.lineTo(sizedWindowWidth-50,150);
 				 canvasContext.stroke();
 				
-				// canvasContext.fillStyle = "#000";
-				// canvasContext.font="20px Arial";
-				// canvasContext.fillText("x",40,155);
+				canvasContext.fillStyle = "#000";
+				canvasContext.font="10px Arial";
+				//canvasContext.fillText("x",40,155);
 			 }
 			 // Bind Mouse events
 			 $(canvas).on('mousedown', function (e) {
