@@ -50,7 +50,7 @@ html, body {
 }
 .ui-popup-container{
     height: 98%;
-    width: 400px!important;
+    width: 300px!important;
     position: absolute;
     top:0;
     left:0!important;

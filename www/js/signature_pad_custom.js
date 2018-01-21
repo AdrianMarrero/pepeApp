@@ -50,10 +50,10 @@
 			 if(canvasContext)
 			 {
 				 canvasContext.canvas.width  = sizedWindowWidth;
-				 canvasContext.canvas.height = 400;
+				 canvasContext.canvas.height = 300;
 
 				 canvasContext.fillStyle = "#fff";
-				 canvasContext.fillRect(0,0,sizedWindowWidth,400);
+				 canvasContext.fillRect(0,0,sizedWindowWidth,300);
 				 
 				 canvasContext.moveTo(50,150);
 				// canvasContext.lineTo(sizedWindowWidth-50,150);
