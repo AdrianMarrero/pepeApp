@@ -23,8 +23,10 @@ app.controller('myCtrl', function ($scope, $filter, $http) {
     firebase.initializeApp(config);
     var database = firebase.database();
 
-    $scope.sebadalMantenimiento = "Revisión Nave I El Sebadal";
-    $scope.sebadal = "El Sebadal";
+    $scope.sebadalMantenimiento_I = "Revisión Nave I El Sebadal";
+    $scope.sebadal_I = "El Sebadal Nave I";
+    $scope.sebadalMantenimiento_II = "Revisión Nave II El Sebadal";
+    $scope.sebadal_II = "El Sebadal Nave II";
     $scope.tiendasLPMantenimiento = "Revisión tienda confección Las Palmas, dos plantas de Almacén y dos de oficinas" +
     				    "\n" + "Revisión tienda J.M. Durán dos plantas" +
     				    "\n" + "Revisión tienda Calzados y almacén";
@@ -54,7 +56,7 @@ function recuperarUltimoParte(){
 	        });
   		}else{
 	  		$scope.$apply(function () {
-	            $scope.numeroParteNuevo = 1;
+	            $scope.numeroParteNuevo = 001;
 	        });
   		}
 	}, function(error) {
@@ -87,12 +89,20 @@ $("#lugar").bind( "change", function(event, ui) {
     case 1:
     	$scope.esCasa = false;
     	if($scope.mantenimiento == 1){
-			$('#textarea-1').textinput().val($scope.sebadalMantenimiento);
+			$('#textarea-1').textinput().val($scope.sebadalMantenimiento_I);
     	}else{
-        	$('#textarea-1').textinput().val($scope.sebadal);
+        	$('#textarea-1').textinput().val($scope.sebadal_I);
     	}
         break;
     case 2:
+    	$scope.esCasa = false;
+    	if($scope.mantenimiento == 1){
+			$('#textarea-1').textinput().val($scope.sebadalMantenimiento_II);
+    	}else{
+        	$('#textarea-1').textinput().val($scope.sebadal_II);
+    	}
+        break;
+    case 3:
     	$scope.esCasa = false;
     	if($scope.mantenimiento == 1){
 			$('#textarea-1').textinput().val($scope.tiendasLPMantenimiento);
@@ -100,7 +110,7 @@ $("#lugar").bind( "change", function(event, ui) {
         	$('#textarea-1').textinput().val($scope.tiendasLP);
     	}
         break;
-    case 3:
+    case 4:
     	$scope.esCasa = false;
     	if($scope.mantenimiento == 1){
         	$('#textarea-1').textinput().val($scope.arucasMantenimiento);
@@ -108,7 +118,7 @@ $("#lugar").bind( "change", function(event, ui) {
 			$('#textarea-1').textinput().val($scope.arucas);
     	}
         break;
-    case 4:
+    case 5:
     	$scope.esCasa = false;
     	if($scope.mantenimiento == 1){
         	$('#textarea-1').textinput().val($scope.maspalomasMantenimiento);
@@ -116,7 +126,7 @@ $("#lugar").bind( "change", function(event, ui) {
 			$('#textarea-1').textinput().val($scope.maspalomas);
     	}
         break;
-    case 5:
+    case 6:
     	$scope.esCasa = false;
     	if($scope.mantenimiento == 1){
     		$('#textarea-1').textinput().val($scope.SietePalmasMantenimiento);
@@ -124,7 +134,7 @@ $("#lugar").bind( "change", function(event, ui) {
     		$('#textarea-1').textinput().val($scope.SietePalmas);
     	}
     	break; 
-    case 6:
+    case 7:
     	$scope.esCasa = true;
 		$('#textarea-1').textinput().val("");
     	break;    
