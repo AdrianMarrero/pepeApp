@@ -264,8 +264,8 @@ $scope.enviar = function() {
 			firmante: $scope.firmante
 		});
 		enviar_email();
-		$scope.reset();
-		recuperarUltimoParte();
+		//$scope.reset();
+		//recuperarUltimoParte();
 	}
 }
 
@@ -299,6 +299,9 @@ function enviar_email(){
 	    }).then(function successCallback(response) {
 	    	console.log(response);
 			alert("Enviado");
+			$scope.reset();
+			recuperarUltimoParte();
+			$scope.close();
 	    }, function errorCallback(response) {
 	       // called asynchronously if an error occurs
 	       // or server returns response with an error status.
@@ -379,6 +382,11 @@ $scope.checkConnection = function(){
     }
 
 }
+
+$scope.close = function(){
+	navigator.app.exitApp();
+}
+
 
 recuperarUltimoParte();
 
