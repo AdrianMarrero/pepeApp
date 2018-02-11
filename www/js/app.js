@@ -24,23 +24,23 @@ app.controller('myCtrl', function ($scope, $filter, $http) {
     firebase.initializeApp(config);
     var database = firebase.database();
 
-    $scope.sebadalMantenimiento_I = "Revisión Nave I El Sebadal";
+    $scope.sebadalMantenimiento_I = "Reparación Nave I El Sebadal";
     $scope.sebadal_I = "El Sebadal Nave I";
-    $scope.sebadalMantenimiento_II = "Revisión Nave II El Sebadal";
+    $scope.sebadalMantenimiento_II = "Reparación Nave II El Sebadal";
     $scope.sebadal_II = "El Sebadal Nave II";
-    $scope.tiendasLPMantenimiento = "Revisión tienda confección Las Palmas, dos plantas de Almacén y dos de oficinas" +
-    				    "\n" + "Revisión tienda J.M. Durán dos plantas" +
-    				    "\n" + "Revisión tienda Calzados y almacén";
+    $scope.tiendasLPMantenimiento = "Reparación tienda confección Las Palmas, dos plantas de Almacén y dos de oficinas" +
+    				    "\n" + "Reparación tienda J.M. Durán dos plantas" +
+    				    "\n" + "Reparación tienda Calzados y almacén";
     $scope.tiendasLP = "Tienda LP";				    
-    $scope.arucasMantenimiento = "Revisión tienda confección Arucas y almacén" +
-    				"\n" + "Revisión tienda Calzados Arucas y almacén" +
-    				"\n" + "Revisión garajes Arucas 2 plantas";
+    $scope.arucasMantenimiento = "Reparación tienda confección Arucas y almacén" +
+    				"\n" + "Reparación tienda Calzados Arucas y almacén" +
+    				"\n" + "Reparación garajes Arucas 2 plantas";
     $scope.arucas = "Arucas";				
-    $scope.maspalomasMantenimiento = "Revisión tienda Maspalomas" +
-    					"\n" + "Revisión almacén Calzados Maspalomas" +
-    					"\n" + "Revisión garajes y zonas comunes de Maspalomas";
+    $scope.maspalomasMantenimiento = "Reparación tienda Maspalomas" +
+    					"\n" + "Reparación almacén Calzados Maspalomas" +
+    					"\n" + "Reparación garajes y zonas comunes de Maspalomas";
     $scope.maspalomas = "Maspalomas";					
-	$scope.SietePalmasMantenimiento = "Revisión tienda de 7 Palmas";
+	$scope.SietePalmasMantenimiento = "Reparación tienda de 7 Palmas";
 	$scope.SietePalmas = "Siete Palmas";								    
 
 function recuperarUltimoParte(){
