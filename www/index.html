@@ -25,7 +25,7 @@
 			</div>
 			<div class="ui-block-b margin-top-10">
 				<p id="n-parte" class="font-size-9 text-right padding-right-20">Parte de trabajo: {{numeroParteNuevo}}</p>
-				<p id="fecha" class="font-size-9 text-right padding-right-20">Fecha: {{ today | date }}</p>
+				<p id="fecha" class="font-size-9 text-right padding-right-20">Fecha: {{today | date:'dd-MM-yyyy' }}</p>
 			</div>
 		</div><!-- /grid-a -->
 	</div>
@@ -37,7 +37,8 @@
 		<select name="select-native-1" id="select-cliente">
 			<option value="1" selected>Desnudos</option>
 		</select>
-		<input disabled="disabled" name="text-10" id="correo-cliente" value="desnudos@correo.com" type="text">
+		<input disabled="disabled" name="text-10" id="correo-cliente" value="teresa@desnudos.es" type="text">
+		<label><input id="check-email" type="checkbox" name="checkbox-0" checked="checked">Enviar email</label>
 		<div class="ui-grid-a">
 			<div class="ui-block-a border-top padding-top"><label for="mantenimiento">Mantenimiento:</label>
 			<select name="mantenimiento" id="mantenimiento" data-role="slider">
