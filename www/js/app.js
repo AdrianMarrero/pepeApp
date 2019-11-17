@@ -295,14 +295,17 @@ function enviar_email(){
 
     var config = {
         headers : {
-            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+			'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;',
+			'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Methods': 'HEAD, GET, POST, PUT, PATCH, DELETE, OPTIONS',
+			'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
         }
     }
 	$http(
 	    {
 	       method: 'POST',
 	       //url: 'http://triatlononline.es/PepeWeb/recibe-formulario.php', 
-	       url: 'https://adrianmarrero.github.io/PepeAppEmail/recibe-formulario.php',
+	       url: 'http://dfinofbr.lucusvirtual.es/PepeWeb/recibe-formulario-web.php',
 	       //url: 'http://localhost/pepeWeb/recibe-formulario.php', 
 	       data: data  /*You data object/class to post*/
 	    }).then(function successCallback(response) {
@@ -376,6 +379,7 @@ $scope.checkConnection = function(){
     var networkState = navigator.connection.type;
 
     var states = {};
+    if(networkState){
     states[Connection.UNKNOWN]  = 'Unknown connection';
     states[Connection.ETHERNET] = 'Ethernet connection';
     states[Connection.WIFI]     = 'WiFi connection';
@@ -384,10 +388,13 @@ $scope.checkConnection = function(){
     states[Connection.CELL_4G]  = 'Cell 4G connection';
     states[Connection.CELL]     = 'Cell generic connection';
     states[Connection.NONE]     = 'NO';
-    if(states[networkState] === 'NO'){
-    	alert("Na hay conexión");
+        if(states[networkState] === 'NO' || states[networkState] !== undefined){
+    		alert("Na hay conexión");
+        }else{
+    		$scope.enviar();
+    	}
     }else{
-    	$scope.enviar();
+    	alert("Na hay conexión");
     }
 
 }
