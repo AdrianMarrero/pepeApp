@@ -376,23 +376,24 @@ $scope.reset = function() {
 }
 
 $scope.checkConnection = function(){
-    var networkState = navigator.connection.type;
+    var networkState = navigator.connection.effectiveType;
 
     var states = {};
     if(networkState){
-    states[Connection.UNKNOWN]  = 'Unknown connection';
-    states[Connection.ETHERNET] = 'Ethernet connection';
-    states[Connection.WIFI]     = 'WiFi connection';
-    states[Connection.CELL_2G]  = 'Cell 2G connection';
-    states[Connection.CELL_3G]  = 'Cell 3G connection';
-    states[Connection.CELL_4G]  = 'Cell 4G connection';
-    states[Connection.CELL]     = 'Cell generic connection';
-    states[Connection.NONE]     = 'NO';
-        if(states[networkState] === 'NO' || states[networkState] !== undefined){
+		/*states[Connection.UNKNOWN]  = 'Unknown connection';
+		states[Connection.ETHERNET] = 'Ethernet connection';
+		states[Connection.WIFI]     = 'WiFi connection';
+		states[Connection.CELL_2G]  = 'Cell 2G connection';
+		states[Connection.CELL_3G]  = 'Cell 3G connection';
+		states[Connection.CELL_4G]  = 'Cell 4G connection';
+		states[Connection.CELL]     = 'Cell generic connection';
+		states[Connection.NONE]     = 'NO';
+        if(states[networkState] === 'NO'){
     		alert("Na hay conexión");
         }else{
     		$scope.enviar();
-    	}
+		}*/
+		$scope.enviar();
     }else{
     	alert("Na hay conexión");
     }
