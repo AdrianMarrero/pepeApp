@@ -301,7 +301,8 @@ function enviar_email(){
 	$http(
 	    {
 	       method: 'POST',
-	       url: 'http://triatlononline.es/PepeWeb/recibe-formulario.php', 
+	       //url: 'http://triatlononline.es/PepeWeb/recibe-formulario.php', 
+	       url: 'https://adrianmarrero.github.io/PepeAppEmail/recibe-formulario.php',
 	       //url: 'http://localhost/pepeWeb/recibe-formulario.php', 
 	       data: data  /*You data object/class to post*/
 	    }).then(function successCallback(response) {
