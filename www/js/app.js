@@ -376,11 +376,12 @@ $scope.reset = function() {
 }
 
 $scope.checkConnection = function(){
-    var networkState = navigator.connection.effectiveType;
+	$scope.enviar();
+   /* var networkState = navigator.connection.effectiveType;
 
     var states = {};
     if(networkState){
-		/*states[Connection.UNKNOWN]  = 'Unknown connection';
+		states[Connection.UNKNOWN]  = 'Unknown connection';
 		states[Connection.ETHERNET] = 'Ethernet connection';
 		states[Connection.WIFI]     = 'WiFi connection';
 		states[Connection.CELL_2G]  = 'Cell 2G connection';
@@ -392,12 +393,12 @@ $scope.checkConnection = function(){
     		alert("Na hay conexión");
         }else{
     		$scope.enviar();
-		}*/
-		$scope.enviar();
+		}
+		
     }else{
     	alert("Na hay conexión");
     }
-
+*/
 }
 
 $scope.close = function(){
