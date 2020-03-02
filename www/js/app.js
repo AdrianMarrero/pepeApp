@@ -305,7 +305,7 @@ function enviar_email(){
 	    {
 	       method: 'POST',
 	       //url: 'http://triatlononline.es/PepeWeb/recibe-formulario.php', 
-	       url: 'http://dfinofbr.lucusvirtual.es/PepeWeb/recibe-formulario.php',
+	       url: 'http://cabildo-test.es/PepeWeb/recibe-formulario.php',
 	       //url: 'http://localhost/pepeWeb/recibe-formulario.php', 
 	       data: data  /*You data object/class to post*/
 	    }).then(function successCallback(response) {
