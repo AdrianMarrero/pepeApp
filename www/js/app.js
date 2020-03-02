@@ -296,18 +296,24 @@ function enviar_email(){
     var config = {
         headers : {
 			'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;',
-			//'Access-Control-Allow-Origin': '*',
-			//'Access-Control-Allow-Methods': 'HEAD, GET, POST, PUT, PATCH, DELETE, OPTIONS',
+			//'Access-Control-Allow-Origin':'*',
+ 			//'Access-Control-Allow-Methods': 'HEAD, GET, POST, PUT, PATCH, DELETE, OPTIONS',
 			//'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
         }
     }
+
+	var url = 'http://cabildo-tests.es/PepeWeb/recibe-formulario.php'
+
 	$http(
 	    {
 	       method: 'POST',
 	       //url: 'http://triatlononline.es/PepeWeb/recibe-formulario.php', 
 	       url: 'http://cabildo-tests.es/PepeWeb/recibe-formulario.php',
 	       //url: 'http://localhost/pepeWeb/recibe-formulario.php', 
-	       data: data  /*You data object/class to post*/
+	       data: data,
+	       headers : {
+        				'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+    				}
 	    }).then(function successCallback(response) {
 	    	console.log(response);
 			alert("Enviado");
